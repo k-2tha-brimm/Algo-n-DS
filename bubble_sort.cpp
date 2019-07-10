@@ -4,9 +4,10 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include <ctime>
 
-
-void bubbleSort(std::vector<int>& theVec);
+std::vector<int> GenerateRandVec(int numberOfNums, int min, int max);
+void BubbleSort(std::vector<int>& theVec);
 std::string CaesarCipher(std::string theString, int key, bool encrypt);
 void SolveForX(std::string equation);
 std::vector<std::string> SplitStringToVector(std::string splitMe);
@@ -15,6 +16,19 @@ std::vector<int> GetPrimes(int num);
 
 
 int main() {
+    std::vector<int> values = GenerateRandVec(10, 5, 50);
+    for(int x : values)
+    {
+        std::cout << x << "\n";
+    }
+    BubbleSort(values);
+    std::cout << "And now sorted:" << "\n";
+    for(int x : values)
+    {
+        std::cout << x << "\n";
+    }
+
+
     std::string theString = "Make me secret";
     std::string encryptedStr = CaesarCipher(theString, 5, true);
     std::string decryptedString = CaesarCipher(encryptedStr, 5, false);
@@ -30,7 +44,7 @@ int main() {
     std::cout << "Number to Check: ";
     std::cin >> num;
     std::cout.setf(std::ios::boolalpha);
-    std::cout << "Is " << num << " Prime " << IsPrime(num) << "\n";
+    std::cout << "Is " << num << " Prime? " << IsPrime(num) << "\n";
 
     std::cout << "Generate Primes up to ";
     int maxPrime;
@@ -38,13 +52,29 @@ int main() {
     std::vector<int> primeList = GetPrimes(maxPrime);
     for(int x : primeList)
     {
-        std::cout << x;
+        std::cout << x << "\n";
     }
 
     return 0;
 }
 
-void bubbleSort(std::vector<int>& theVec)
+std::vector<int> GenerateRandVec(int numberOfNums, int min, int max)
+{
+    std::vector<int> result;
+    srand(time(NULL));
+
+    int i = 0, randVal = 0;
+
+    while(i < numberOfNums)
+    {
+        randVal = min + std::rand() % ((max + 1) - min);
+        result.push_back(randVal);
+        ++i;
+    }
+    return result;
+}
+
+void BubbleSort(std::vector<int>& theVec)
 {
     int i = theVec.size() -1;
     while(i >= 1)
@@ -52,27 +82,16 @@ void bubbleSort(std::vector<int>& theVec)
         int j = 0;
         while(j < i)
         {
-            printf("\nIs %d > %d\n", theVec[j], theVec[j + 1]);
 
             if(theVec[j] >= theVec[j + 1])
             {
-                std::cout << "Switch\n";
                 int temp = theVec[j];
                 theVec[j] = theVec[j + 1];
                 theVec[j+1] = temp;
-            } else
-            {
-                std::cout << "Don't switch\n";
             }
 
             ++j;
-
-            for(auto k: theVec)
-            {
-                std::cout << k << ", ";
-            }
         }
-        std::cout << "\nEnd of Round\n";
         --i;
 
     }
