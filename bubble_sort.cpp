@@ -10,7 +10,8 @@ void bubbleSort(std::vector<int>& theVec);
 std::string CaesarCipher(std::string theString, int key, bool encrypt);
 void SolveForX(std::string equation);
 std::vector<std::string> SplitStringToVector(std::string splitMe);
-
+bool IsPrime(int num);
+std::vector<int> GetPrimes(int num);
 
 
 int main() {
@@ -20,14 +21,24 @@ int main() {
     std::cout << "Encrypted " << encryptedStr << "\n";
     std::cout << "Decrypted " << decryptedString << "\n";
 
-//    std::cout << "Enter an equation to solve ";
-//    std::string equation = "";
-//    getline(std::cin, equation);
-//    SolveForX(equation);
-    std::vector<std::string> splitString = SplitStringToVector("Hello this is a string.");
-    for(std::string x : splitString)
+    std::cout << "Enter an equation to solve ";
+    std::string equation = "";
+    getline(std::cin, equation);
+    SolveForX(equation);
+
+    int num = 0;
+    std::cout << "Number to Check: ";
+    std::cin >> num;
+    std::cout.setf(std::ios::boolalpha);
+    std::cout << "Is " << num << " Prime " << IsPrime(num) << "\n";
+
+    std::cout << "Generate Primes up to ";
+    int maxPrime;
+    std::cin >> maxPrime;
+    std::vector<int> primeList = GetPrimes(maxPrime);
+    for(int x : primeList)
     {
-        std::cout << x << ' ';
+        std::cout << x;
     }
 
     return 0;
@@ -113,6 +124,12 @@ std::string CaesarCipher(std::string theString, int key, bool encrypt)
 
 void SolveForX(std::string equation)
 {
+    std::vector<std::string> vecEquation = SplitStringToVector(equation);
+    int x = std::stoi(vecEquation[2]);
+    int y = std::stoi(vecEquation[4]);
+
+    int xVal = y - x;
+    std::cout << "x = " << xVal << "\n";
 
 }
 
@@ -134,3 +151,40 @@ std::vector<std::string> SplitStringToVector(std::string splitMe)
     return result;
 }
 
+bool IsPrime(int num)
+{
+    if(num < 0)
+    {
+        return false;
+    }
+
+    if(num == 1)
+    {
+        return true;
+    }
+
+    int i = 2;
+    for(i; i < num; i++)
+    {
+        if(num % i == 0)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+std::vector<int> GetPrimes(int num)
+{
+    std::vector<int> v;
+    for(int i = 1; i < num; i++)
+    {
+        if(IsPrime(i))
+        {
+            v.push_back(i);
+        }
+
+    }
+    return v;
+}
