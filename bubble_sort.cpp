@@ -61,12 +61,14 @@ int main() {
 std::vector<int> GenerateRandVec(int numberOfNums, int min, int max)
 {
     std::vector<int> result;
+    // seed our rand()
     srand(time(NULL));
 
     int i = 0, randVal = 0;
 
     while(i < numberOfNums)
     {
+        // here we call our rand using the seeded range provided above
         randVal = min + std::rand() % ((max + 1) - min);
         result.push_back(randVal);
         ++i;
@@ -141,6 +143,7 @@ std::string CaesarCipher(std::string theString, int key, bool encrypt)
     return returnString;
 }
 
+// this function is easy, but splitting a string is kind of tough, turns out
 void SolveForX(std::string equation)
 {
     std::vector<std::string> vecEquation = SplitStringToVector(equation);
@@ -149,9 +152,9 @@ void SolveForX(std::string equation)
 
     int xVal = y - x;
     std::cout << "x = " << xVal << "\n";
-
 }
 
+// iterate over each char and check if it is a delimiter (space, here)
 std::vector<std::string> SplitStringToVector(std::string splitMe)
 {
     std::string word = "";
@@ -194,6 +197,7 @@ bool IsPrime(int num)
     return true;
 }
 
+// has to be a vector, since we won't know the size of the output
 std::vector<int> GetPrimes(int num)
 {
     std::vector<int> v;
