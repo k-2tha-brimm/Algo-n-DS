@@ -61,3 +61,42 @@ void PrintVec(std::vector<int>& vector)
     }
     std::cout << "|\n";
 }
+
+// “AABAACAABAA”
+// lps = [0, 1, 0, 1, 2, 0, 1, 2, 3, 4, 5], len = 4, i = 9     pat[i] = A, pat[len] = A
+
+
+void ComputeLPSArray(char* pat, int M, int* lps)
+{
+    // length of the previous longest prefix suffix
+    int len = 0;
+
+    // the first value of the array is ALWAYS 0
+    lps[0] = 0;
+
+    int i = 1;
+    while(i < M)
+    {
+        if(pat[i] == pat[len])
+        {
+            len++;
+            lps[i] = len;
+            i++;
+        }
+        else  // (pat[i] != pat[len])
+        {
+            if(len != 0)
+            {
+                len = lps[len-1];
+
+                // we do not increment i here... why is that?
+                // let's step through.
+            }
+            else // if (len == 0)
+            {
+                lps[i] = 0;
+                i++;
+            }
+        }
+    }
+}
